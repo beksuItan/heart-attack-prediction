@@ -138,7 +138,8 @@ export default function Home() {
       <Head>
         <title>Hear attack prediction</title>
         <meta name="description" content="Heart attack application" />
-        <link rel="icon" href="/favicon.ico" />
+          <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
+          <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
