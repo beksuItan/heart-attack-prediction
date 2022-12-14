@@ -125,7 +125,7 @@ export default function Home() {
             "thall": parseInt(thall!)
         };
 
-        fetch("http://157.245.64.45:5000/predict", {
+        fetch("https://3s-shop.ru/predict", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
