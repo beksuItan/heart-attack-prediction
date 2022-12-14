@@ -4,8 +4,13 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-
 import {useState} from "react";
+
+interface IResult {
+    model_accuracy: number,
+    predict: number,
+    predict_accuracy: number
+}
 
 export default function Home() {
     const genders = [
@@ -85,18 +90,27 @@ export default function Home() {
     const [caa, setCaa] = useState<string>();
     const [thall, setThall] = useState<string>();
 
-    const [results, setResults] = useState();
+    const [results, setResults] = useState<IResult>();
 
+    // @ts-ignore
     const handleAgeChange = (event) => setAge(event.target.value);
+    // @ts-ignore
     const handleSexChange = (event) => setSex(event.target.value);
+    // @ts-ignore
     const handleCpChange = (event) => setCp(event.target.value);
+    // @ts-ignore
     const handleThalachhChange = (event) => setThalachh(event.target.value);
+    // @ts-ignore
     const handleExngChange = (event) => setExng(event.target.value);
+    // @ts-ignore
     const handleOldpeakChange = (event) => setOldpeak(event.target.value);
+    // @ts-ignore
     const handleSlpChange = (event) => setSlp(event.target.value);
+    // @ts-ignore
     const handleCaaChange = (event) => setCaa(event.target.value);
+    // @ts-ignore
     const handleThallChange = (event) => setThall(event.target.value);
-
+    // @ts-ignore
     const handleSubmit = (event) => {
         event.preventDefault();
         const payload = {
@@ -119,8 +133,6 @@ export default function Home() {
             .then((data) => setResults(data));
     };
 
-  // @ts-ignore
-    // @ts-ignore
     return (
     <Container maxWidth="sm">
       <Head>
@@ -265,7 +277,7 @@ export default function Home() {
                   spacing={2}
               >
                   <p>
-                      {results?.predict > 0 ? 'I\'m sorry to tell you, but you\'re at risk for a heart attack.  Please see a doctor if you have any complaints. Get well soon!'
+                      {results.predict > 0 ? 'I\'m sorry to tell you, but you\'re at risk for a heart attack.  Please see a doctor if you have any complaints. Get well soon!'
                       : 'Congratulations! You passed the rapid heart attack test. You are out of the risk zone for a heart attack. Stay healthy as you!' }
                   </p>
               </Stack>
