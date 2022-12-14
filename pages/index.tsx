@@ -58,6 +58,10 @@ export default function Home() {
         },
         {
             value: 1,
+            label: 'Flat'
+        },
+        {
+            value: 2,
             label: 'Downslopping'
         }
     ];
@@ -228,7 +232,7 @@ export default function Home() {
                       />
                       <TextField
                           id="outlined-required"
-                          label="Slp"
+                          label="Slope of ST segment"
                           select
                           SelectProps={{
                               native: true,
@@ -244,7 +248,7 @@ export default function Home() {
                       </TextField>
                       <TextField
                           id="outlined-required"
-                          label="Caa"
+                          label="Number of major vessels"
                           type="number"
                           inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                           value={caa}
@@ -252,7 +256,7 @@ export default function Home() {
                       />
                       <TextField
                           id="outlined-required"
-                          label="Thall"
+                          label="Low level of hemoglobin"
                           select
                           SelectProps={{
                               native: true,
