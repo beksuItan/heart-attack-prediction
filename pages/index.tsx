@@ -299,7 +299,7 @@ export default function Home() {
                       <span style={{fontWeight: 'bold', fontSize: '18px'}}>Result:</span>
                       {results.predict === 0 || results.predict === 1 ? (
                           <span>
-                          {results.predict === 0 ? 'I\'m sorry to tell you, but you\'re at risk for a heart attack.  Please see a doctor if you have any complaints. Get well soon!'
+                          {results.predict !== 0 ? 'I\'m sorry to tell you, but you\'re at risk for a heart attack.  Please see a doctor if you have any complaints. Get well soon!'
                               : 'Congratulations! You passed the rapid heart attack test. You are out of the risk zone for a heart attack. Stay healthy as you!' }
                       </span>
                       ): (
