@@ -4,12 +4,12 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import {useState} from "react";
+import {useState, useRef} from "react";
 
 interface IResult {
-    model_accuracy: number,
-    predict: number,
-    predict_accuracy: number
+    model_accuracy: number | null,
+    predict: number | null,
+    predict_accuracy: number | null
 }
 
 export default function Home() {
@@ -93,8 +93,13 @@ export default function Home() {
     const [slp, setSlp] = useState<string>();
     const [caa, setCaa] = useState<string>();
     const [thall, setThall] = useState<string>();
+    const formRef = useRef(null);
 
-    const [results, setResults] = useState<IResult>();
+    const [results, setResults] = useState<IResult>({
+        predict_accuracy: null,
+        predict: null,
+        model_accuracy: null
+    });
 
     // @ts-ignore
     const handleAgeChange = (event) => setAge(event.target.value);
@@ -135,6 +140,17 @@ export default function Home() {
             body: JSON.stringify(payload),
         }).then((res) => res.json())
             .then((data) => setResults(data));
+        // @ts-ignore
+        formRef.current.reset();
+        setAge('');
+        setCaa('');
+        setSlp('');
+        setExng('');
+        setSex('');
+        setThalachh('');
+        setThall('');
+        setOldpeak('');
+        setCp('')
     };
 
     return (
@@ -147,7 +163,6 @@ export default function Home() {
 
       <main>
           <h1>Heart attack prediction</h1>
-          { !results ? (
               <Box
                   component="form"
                   sx={{
@@ -156,6 +171,7 @@ export default function Home() {
                   noValidate
                   autoComplete="off"
                   onSubmit={handleSubmit}
+                  ref={formRef}
               >
                   <div>
                       <TextField
@@ -271,21 +287,33 @@ export default function Home() {
                           ))}
                       </TextField>
                   </div>
-                  <Button type="submit" variant="contained" fullWidth={true}>Submit</Button>
+                  <Button type="submit" variant="contained" fullWidth={true}>Predict</Button>
               </Box>
-          ): (
               <Stack
-                  direction="row"
+                  direction="column"
                   justifyContent="center"
-                  alignItems="center"
-                  spacing={2}
+                  alignItems="start"
+                  spacing={1}
               >
                   <p>
-                      {results.predict > 0 ? 'I\'m sorry to tell you, but you\'re at risk for a heart attack.  Please see a doctor if you have any complaints. Get well soon!'
-                      : 'Congratulations! You passed the rapid heart attack test. You are out of the risk zone for a heart attack. Stay healthy as you!' }
+                      <span style={{fontWeight: 'bold', fontSize: '18px'}}>Result:</span>
+                      {results.predict === 0 || results.predict === 1 ? (
+                          <span>
+                          {results.predict === 0 ? 'I\'m sorry to tell you, but you\'re at risk for a heart attack.  Please see a doctor if you have any complaints. Get well soon!'
+                              : 'Congratulations! You passed the rapid heart attack test. You are out of the risk zone for a heart attack. Stay healthy as you!' }
+                      </span>
+                      ): (
+                          <span></span>
+                      )}
+
+                  </p>
+                  <p>
+                      <span style={{fontWeight: 'bold', fontSize: '18px'}}>Prediction accuracy:</span> { results.predict_accuracy}
+                  </p>
+                  <p>
+                      <span style={{fontWeight: 'bold', fontSize: '18px'}}>Overall model accuracy:</span> { results.model_accuracy}
                   </p>
               </Stack>
-          )}
       </main>
 
 
