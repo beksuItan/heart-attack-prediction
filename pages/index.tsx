@@ -220,7 +220,7 @@ export default function Home() {
       </Head>
 
       <main>
-          <h1>Heart attack prediction</h1>
+          <h1>Heart attack prediction 💔 🏥</h1>
               <Box
                   component="form"
                   sx={{
