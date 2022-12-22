@@ -394,7 +394,7 @@ export default function Home() {
                         />
                       <TextField
                           id="outlined-selected"
-                          label="Do you live in developed a country?"
+                          label="Do you live in a developed country?"
                           select
                           SelectProps={{
                               native: true,
