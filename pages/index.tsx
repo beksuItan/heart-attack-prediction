@@ -84,6 +84,43 @@ export default function Home() {
         },
     ];
 
+    const fbsList = [
+        {
+            value: 0,
+            label: 'Less than 120 mg/d'
+        },
+        {
+            value: 1,
+            label: 'More than 120 mg/d'
+        }
+    ];
+
+    const restecgList = [
+        {
+            value: 0,
+            label: 'Normal'
+        },
+        {
+            value: 1,
+            label: 'ST-T wave abnormality'
+        },
+        {
+            value: 2,
+            label: 'Left ventricular hypertrophy by Estes\' criteria'
+        }
+    ];
+
+    const countries = [
+        {
+            value: 0,
+            label: 'No'
+        },
+        {
+            value: 1,
+            label: 'Yes'
+        },
+    ];
+
     const [age, setAge] = useState<string>();
     const [sex, setSex] = useState<string>();
     const [cp, setCp] = useState<string>();
@@ -93,6 +130,12 @@ export default function Home() {
     const [slp, setSlp] = useState<string>();
     const [caa, setCaa] = useState<string>();
     const [thall, setThall] = useState<string>();
+    const [fbs, setFbs] = useState<string>();
+    const [restecg, setRestecg] = useState<string>();
+    const [chol, setChol] = useState<string>();
+    const [trtbps, setTrtbps] = useState<string>();
+    const [country, setCountry] = useState<string>();
+
     const formRef = useRef(null);
 
     const [results, setResults] = useState<IResult>({
@@ -120,6 +163,16 @@ export default function Home() {
     // @ts-ignore
     const handleThallChange = (event) => setThall(event.target.value);
     // @ts-ignore
+    const handleFbsChange = (event) => setFbs(event.target.value);
+    // @ts-ignore
+    const handleRestecgChange = (event) => setRestecg(event.target.value);
+    // @ts-ignore
+    const handleCholChange = (event) => setChol(event.target.value);
+    // @ts-ignore
+    const handleTrtbpsChange = (event) => setTrtbps(event.target.value);
+    // @ts-ignore
+    const handleCountryChange = (event) => setCountry(event.target.value);
+    // @ts-ignore
     const handleSubmit = (event) => {
         event.preventDefault();
         const payload = {
@@ -131,7 +184,12 @@ export default function Home() {
             "oldpeak": parseFloat(oldpeak!),
             "slp": parseInt(slp!),
             "caa": parseInt(caa!),
-            "thall": parseInt(thall!)
+            "thall": parseInt(thall!),
+            "fbs": parseInt(fbs!),
+            "restecg": parseInt(restecg!),
+            "chol":parseInt(chol!),
+            "trtbps":parseInt(trtbps!),
+            "country":parseInt(country!)
         };
 
         fetch("https://3s-shop.ru/predict", {
@@ -141,16 +199,16 @@ export default function Home() {
         }).then((res) => res.json())
             .then((data) => setResults(data));
         // @ts-ignore
-        formRef.current.reset();
-        setAge('');
-        setCaa('');
-        setSlp('');
-        setExng('');
-        setSex('');
-        setThalachh('');
-        setThall('');
-        setOldpeak('');
-        setCp('')
+        // formRef.current.reset();
+        // setAge('');
+        // setCaa('');
+        // setSlp('');
+        // setExng('');
+        // setSex('');
+        // setThalachh('');
+        // setThall('');
+        // setOldpeak('');
+        // setCp('')
     };
 
     return (
@@ -281,6 +339,70 @@ export default function Home() {
                       >
                           <option>Select</option>
                           {levelsHemoglobin.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                  {option.label}
+                              </option>
+                          ))}
+                      </TextField>
+                      <TextField
+                          id="outlined-selected"
+                          label="Fasting blood sugar"
+                          select
+                          SelectProps={{
+                              native: true,
+                          }}
+                          onChange={handleFbsChange}
+                      >
+                          <option>Select</option>
+                          {fbsList.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                  {option.label}
+                              </option>
+                          ))}
+                      </TextField>
+                      <TextField
+                          id="outlined-selected"
+                          label="Resting electrocardiographic results"
+                          select
+                          SelectProps={{
+                              native: true,
+                          }}
+                          onChange={handleRestecgChange}
+                      >
+                          <option>Select</option>
+                          {restecgList.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                  {option.label}
+                              </option>
+                          ))}
+                      </TextField>
+                      <TextField
+                          id="outlined-required"
+                          label="Cholesterol in mg/dl fetched via BMI sensor"
+                          type="number"
+                          inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                          value={chol}
+                          onChange={handleCholChange}
+                      />
+                      <TextField
+                        id="outlined-required"
+                        label="Resting blood pressure (in mm Hg)"
+                        type="number"
+                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                        value={trtbps}
+                        onChange={handleTrtbpsChange}
+                        />
+                      <TextField
+                          id="outlined-selected"
+                          label="Do you live in developed a country?"
+                          select
+                          SelectProps={{
+                              native: true,
+                          }}
+                          onChange={handleCountryChange}
+                      >
+                          <option>Select</option>
+                          {countries.map((option) => (
                               <option key={option.value} value={option.value}>
                                   {option.label}
                               </option>
